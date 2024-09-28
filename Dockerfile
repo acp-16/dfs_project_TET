@@ -1,4 +1,4 @@
-# Usamos una imagen base de Python
+# Usamos una imagen base de Python que está aislada del sistema operativo del host
 FROM python:3.8-slim
 
 # Establecemos el directorio de trabajo en el contenedor
@@ -7,10 +7,11 @@ WORKDIR /app
 # Copiamos todos los archivos necesarios al contenedor
 COPY . /app/
 
-# Instalamos las dependencias necesarias
-RUN pip install -r /app/requirements.txt
+# Instalamos las dependencias manualmente sin restricciones del sistema anfitrión
+RUN python3 -m pip install --no-cache-dir --upgrade pip
+RUN python3 -m `pip install --no-cache-dir flask requests flask-httpauth werkzeug
 
-# Exponemos los puertos necesarios (5000 para el NameNode y 5001-5003 para los DataNodes)
+# Exponemos los puertos necesarios
 EXPOSE 5000 5001 5002 5003
 
 # Determinamos si se ejecutará el NameNode o el DataNode basado en una variable de entorno

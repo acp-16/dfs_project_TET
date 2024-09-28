@@ -29,26 +29,61 @@ def put():
     filename = file.filename
     content = file.read()
 
-    # Particionar el archivo en bloques
+    # Particionar el archivo en bloques de 1024 bytes
     bloques = [content[i:i + 1024] for i in range(0, len(content), 1024)]
 
-    # Elegir DataNodes para almacenar los bloques y replicarlos
+    # Mapeo de ubicaciones de los bloques
     ubicaciones = {}
+    
     for i, bloque in enumerate(bloques):
-        primary_datanode = random.choice(data_nodes)
-        follower_datanode = random.choice([dn for dn in data_nodes if dn != primary_datanode])
+        bloque_data = bloque.decode('latin1')
+        almacenado = False
+        
+        # Intentamos almacenar el bloque en cualquier DataNode disponible
+        nodos_disponibles = list(data_nodes)  # Copiamos la lista de DataNodes disponibles
+        
+        # Intentamos almacenar el bloque en el líder
+        while nodos_disponibles and not almacenado:
+            try:
+                primary_datanode = random.choice(nodos_disponibles)
+                nodos_disponibles.remove(primary_datanode)
 
-        # Enviar el bloque al DataNode primario (Leader)
-        response = requests.post(f'{primary_datanode}/store', json={'blockId': f'{filename}_block{i}', 'data': bloque.decode('latin1')})
-        if response.status_code == 200:
-            # Almacenar la ubicación del bloque
-            ubicaciones[i] = {'leader': primary_datanode, 'follower': follower_datanode}
+                # Intentar almacenar el bloque en el DataNode primario (líder)
+                response = requests.post(f'{primary_datanode}/store', json={'blockId': f'{filename}_block{i}', 'data': bloque_data})
+                if response.status_code == 200:
+                    # Almacenar la ubicación del bloque en el líder
+                    ubicaciones[i] = {'leader': primary_datanode, 'follower': None}
+                    almacenado = True
+                    print(f"Bloque {i} almacenado exitosamente en el líder {primary_datanode}")
 
-            # Replicar el bloque en el DataNode follower
-            requests.post(f'{follower_datanode}/store', json={'blockId': f'{filename}_block{i}', 'data': bloque.decode('latin1')})
+                    # Intentamos replicar en un follower
+                    follower_almacenado = False
+                    while nodos_disponibles and not follower_almacenado:
+                        follower_datanode = random.choice(nodos_disponibles)
+                        nodos_disponibles.remove(follower_datanode)
 
+                        try:
+                            follower_response = requests.post(f'{follower_datanode}/store', json={'blockId': f'{filename}_block{i}', 'data': bloque_data})
+                            if follower_response.status_code == 200:
+                                # Almacenar la ubicación del follower
+                                ubicaciones[i]['follower'] = follower_datanode
+                                follower_almacenado = True
+                                print(f"Bloque {i} replicado exitosamente en el follower {follower_datanode}")
+                        except requests.exceptions.RequestException:
+                            print(f"Error replicando bloque {i} en el follower {follower_datanode}, intentando con otro nodo...")
+                    break  # Salir del bucle si el líder fue exitoso
+            except requests.exceptions.RequestException:
+                # Si falla almacenar en el nodo líder, intentar con otro nodo
+                print(f"Error almacenando bloque {i} en el líder {primary_datanode}, intentando con otro nodo...")
+
+        # Si no se pudo almacenar en ningún nodo
+        if not almacenado:
+            return jsonify({'error': f'No se pudo almacenar el bloque {i}'}), 500
+
+    # Guardar las ubicaciones de los bloques en los metadatos
     metadatos[filename] = ubicaciones
     return jsonify({'message': f'{filename} subido con éxito', 'ubicaciones': ubicaciones})
+
 
 @app.route('/get/<filename>', methods=['GET'])
 @auth.login_required
@@ -77,15 +112,3 @@ def get(filename):
 
 if __name__ == '__main__':
     app.run(port=5000)
-
-
-        # for i, datanode_info in metadatos[filename].items():
-        #     primary_datanode = datanode_info['leader']
-        #     follower_datanode = datanode_info['follower']
-
-        #     response = requests.get(f'{primary_datanode}/block/{filename}_block{i}')
-        #     if response.status_code != 200:
-        #         response = requests.get(f'{follower_datanode}/block/{filename}_block{i}')
-
-        #     if response.status_code == 200:
-        #         file_data += response.content

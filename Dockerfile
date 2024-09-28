@@ -8,8 +8,8 @@ WORKDIR /app
 COPY . /app/
 
 # Instalamos las dependencias manualmente sin restricciones del sistema anfitrión
-RUN python3 -m pip install --no-cache-dir --upgrade pip
-RUN python3 -m `pip install --no-cache-dir flask requests flask-httpauth werkzeug
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Exponemos los puertos necesarios
 EXPOSE 5000 5001 5002 5003

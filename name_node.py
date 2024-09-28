@@ -58,17 +58,34 @@ def get(filename):
         for i, datanode_info in metadatos[filename].items():
             primary_datanode = datanode_info['leader']
             follower_datanode = datanode_info['follower']
-
-            response = requests.get(f'{primary_datanode}/block/{filename}_block{i}')
-            if response.status_code != 200:
-                response = requests.get(f'{follower_datanode}/block/{filename}_block{i}')
-
+            try:
+                response = requests.get(f'{primary_datanode}/block/{filename}_block{i}')
+                if response.status_code != 200:
+                    raise requests.exceptions.RequestException
+            except requests.exceptions.RequestException:
+                print(f'Error al obtener bloque {i} de {primary_datanode}, intentando con follower...')
+                try:
+                    response = requests.get(f'{follower_datanode}/block/{filename}_block{i}')
+                except requests.exceptions.RequestException:
+                    print(f'Error también en {follower_datanode}. El bloque {i} está inaccesible.')
+                    return jsonify({'error': f'Bloque {i} no disponible'}), 500
             if response.status_code == 200:
                 file_data += response.content
-
+            else:
+                return jsonify({'error': 'Archivo no encontrado'}), 404
         return file_data
-    else:
-        return jsonify({'error': 'Archivo no encontrado'}), 404
 
 if __name__ == '__main__':
     app.run(port=5000)
+
+
+        # for i, datanode_info in metadatos[filename].items():
+        #     primary_datanode = datanode_info['leader']
+        #     follower_datanode = datanode_info['follower']
+
+        #     response = requests.get(f'{primary_datanode}/block/{filename}_block{i}')
+        #     if response.status_code != 200:
+        #         response = requests.get(f'{follower_datanode}/block/{filename}_block{i}')
+
+        #     if response.status_code == 200:
+        #         file_data += response.content

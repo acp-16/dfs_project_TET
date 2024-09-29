@@ -3,7 +3,7 @@ import requests
 import os
 from requests.auth import HTTPBasicAuth
 
-NAME_NODE_URL = "http://localhost:5000"
+NAME_NODE_URL = "http://3.90.4.111:5000/"
 
 @click.group()
 def cli():

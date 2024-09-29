@@ -21,7 +21,7 @@ def verify_password(username, password):
         return username
     return None
 
-data_nodes = ['http://localhost:5001', 'http://localhost:5002', 'http://localhost:5003']
+data_nodes = ['http://34.239.134.254:5001', 'http://52.21.140.231:5002', 'http://3.89.226.36:5003']
 
 metadatos = {}
 
@@ -39,7 +39,7 @@ def put():
     ubicaciones = {}
     
     for i, bloque in enumerate(bloques):
-        bloque_data = bloque.decode('latin1')
+        bloque_data = bloque
         almacenado = False
         
         # Intentamos almacenar el bloque en cualquier DataNode disponible

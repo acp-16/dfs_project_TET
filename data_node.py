@@ -28,4 +28,4 @@ if __name__ == '__main__':
     DATA_DIR = f'./data{args.port}'
     if not os.path.exists(DATA_DIR):
         os.makedirs(DATA_DIR)
-    app.run(port=args.port)
+    app.run(host='0.0.0.0', port=args.port)

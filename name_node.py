@@ -22,7 +22,7 @@ def verify_password(username, password):
         return username
     return None
 
-data_nodes = ['http://34.239.134.254:5001', 'http://52.21.140.231:5002', 'http://3.89.226.36:5003']
+data_nodes = ['http://3.221.51.224:5001', 'http://3.233.95.99:5002', 'http://34.198.142.150:5003']
 
 metadatos = {}
 

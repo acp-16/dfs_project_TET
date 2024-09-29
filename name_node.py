@@ -8,7 +8,8 @@ import base64
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
-user_root_dir = os.path.join(os.getcwd(), 'yo')
+
+user_root_dir = os.getcwd()  # En lugar de 'yo', usa el directorio actual como raíz
 current_directory = user_root_dir
 
 users = {

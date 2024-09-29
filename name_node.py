@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import random
 import requests
 import os
+import base64
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
@@ -39,7 +40,7 @@ def put():
     ubicaciones = {}
     
     for i, bloque in enumerate(bloques):
-        bloque_data = bloque
+        bloque_data = base64.b64encode(bloque).decode('utf-8')
         almacenado = False
         
         # Intentamos almacenar el bloque en cualquier DataNode disponible

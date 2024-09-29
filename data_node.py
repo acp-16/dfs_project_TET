@@ -1,13 +1,14 @@
 from flask import Flask, request, send_file, jsonify
 import os
 import argparse
+import base64
 
 app = Flask(__name__)
 
 @app.route('/store', methods=['POST'])
 def store():
     block_id = request.json['blockId']
-    data = request.json['data']
+    data = base64.b64decode(request.json['data'])
     with open(os.path.join(DATA_DIR, block_id), 'w') as f:
         f.write(data)
     return jsonify({'message': 'Bloque almacenado correctamente'})

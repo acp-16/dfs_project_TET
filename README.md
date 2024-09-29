@@ -20,7 +20,7 @@ Este proyecto se centra en la implementación de un sistema de archivos distribu
 - **Despliegue en AWS:** Se logró realizar el despliegue en `AWS`, garantizando el uso de IPs elásticas.
 
 ### 1.2. Aspectos No Cumplidos
-No hubo aspectos mayores con los que el proyecto no haya cumplido.
+No hubo aspectos mayores con los que el proyecto no haya cumplido, se cumplió con todos los requisitos.
 
 ## 2.  Información General de Diseño de Alto Nivel
 El sistema de archivos distribuido sigue una arquitectura maestro-esclavo, donde el NameNode lidera la distribución de bloques y coordina las réplicas entre los DataNodes. Los clientes se comunican directamente con los DataNodes para leer y escribir archivos, mientras que las decisiones de asignación de bloques son gestionadas por el NameNode. El NameNode mantiene una tabla de metadatos con la ubicación de cada bloque y los DataNodes responsables de su almacenamiento.

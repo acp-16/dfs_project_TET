@@ -11,7 +11,6 @@ def cli():
     pass
 
 
-# Comando para subit un archivo al DFS
 @cli.command()
 @click.argument('filename')
 @click.option('--username', prompt=True, help='Nombre de usuario')
@@ -30,7 +29,6 @@ def put(filename, username, password):
         click.echo(f'El archivo {filename} no existe')
 
 
-# Comando para descargar un archivo del DFS
 @cli.command()
 @click.argument('filename')
 @click.option('--username', prompt=True, help='Nombre de usuario')
@@ -47,7 +45,6 @@ def get(filename, username, password):
         click.echo('Error al descargar el archivo')
         
 
-# Comando para listar archivos y directorios en el DFS
 @cli.command()
 @click.option('--username', prompt=True, help='Nombre de usuario')
 @click.option('--password', prompt=True, hide_input=True, help='Contraseña')
@@ -60,7 +57,6 @@ def ls(username, password):
     else:
         click.echo('Error al listar el contenido')
 
-# Comando para cambiar de directorio en el DFS
 @cli.command()
 @click.argument('directory')
 @click.option('--username', prompt=True, help='Nombre de usuario')
@@ -74,8 +70,6 @@ def cd(directory, username, password):
     else:
         click.echo(f'Error al cambiar de directorio a {directory}')
 
-
-# Comando para crear un nuevo directorio en el DFS
 
 @cli.command()
 @click.argument('directory')
@@ -91,8 +85,6 @@ def mkdir(directory, username, password):
         click.echo(f'Error al crear el directorio {directory}')
 
 
-# Comando para eliminar un directorio en el DFS
-
 @cli.command()
 @click.argument('directory')
 @click.option('--username', prompt=True, help='Nombre de usuario')
@@ -106,8 +98,6 @@ def rmdir(directory, username, password):
     else:
         click.echo(f'Error al eliminar el directorio {directory}')
 
-
-# Comando para eliminar un archivo en el DFS
 
 @cli.command()
 @click.argument('filename')

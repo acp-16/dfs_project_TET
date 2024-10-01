@@ -122,7 +122,7 @@ Y luego, dependiendo el puerto, ejecutar: (en este caso se muestra el 5001, pero
 ![3](https://github.com/user-attachments/assets/8ebcb896-a20f-4a67-83da-6d7175f5d636)
 ![4](https://github.com/user-attachments/assets/267e2cf5-0c50-40ff-9569-dae83443765e)
 
-### 4.5 [Video](https://youtube.com)
+### 4.5 [Video](https://drive.google.com/file/d/1kgXeLMJ-qyoylkpxjmVsMAUmofE4BtMU/view?usp=sharing)
  
 ## 5. Referencias:
 - Ghemawat, S., Gobioff, H., & Leung, S.-T. (2003). The Google file system. ACM SIGOPS Operating Systems Review, 37(5), 29-43.

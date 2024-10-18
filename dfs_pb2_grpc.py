@@ -35,40 +35,40 @@ class NameNodeStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.Put = channel.unary_unary(
-                '/dfs.NameNode/Put',
-                request_serializer=dfs__pb2.PutRequest.SerializeToString,
-                response_deserializer=dfs__pb2.PutResponse.FromString,
+        self.UploadFile = channel.unary_unary(
+                '/dfs.NameNode/UploadFile',
+                request_serializer=dfs__pb2.UploadFileRequest.SerializeToString,
+                response_deserializer=dfs__pb2.UploadFileResponse.FromString,
                 _registered_method=True)
-        self.Get = channel.unary_unary(
-                '/dfs.NameNode/Get',
-                request_serializer=dfs__pb2.GetRequest.SerializeToString,
-                response_deserializer=dfs__pb2.GetResponse.FromString,
+        self.DownloadFile = channel.unary_unary(
+                '/dfs.NameNode/DownloadFile',
+                request_serializer=dfs__pb2.DownloadFileRequest.SerializeToString,
+                response_deserializer=dfs__pb2.DownloadFileResponse.FromString,
                 _registered_method=True)
-        self.ListFiles = channel.unary_unary(
-                '/dfs.NameNode/ListFiles',
+        self.Ls = channel.unary_unary(
+                '/dfs.NameNode/Ls',
                 request_serializer=dfs__pb2.Empty.SerializeToString,
-                response_deserializer=dfs__pb2.ListFilesResponse.FromString,
+                response_deserializer=dfs__pb2.LsResponse.FromString,
                 _registered_method=True)
-        self.ChangeDirectory = channel.unary_unary(
-                '/dfs.NameNode/ChangeDirectory',
-                request_serializer=dfs__pb2.ChangeDirectoryRequest.SerializeToString,
-                response_deserializer=dfs__pb2.DirectoryResponse.FromString,
+        self.Cd = channel.unary_unary(
+                '/dfs.NameNode/Cd',
+                request_serializer=dfs__pb2.CdRequest.SerializeToString,
+                response_deserializer=dfs__pb2.CdResponse.FromString,
                 _registered_method=True)
-        self.MakeDirectory = channel.unary_unary(
-                '/dfs.NameNode/MakeDirectory',
-                request_serializer=dfs__pb2.MakeDirectoryRequest.SerializeToString,
-                response_deserializer=dfs__pb2.DirectoryResponse.FromString,
+        self.Mkdir = channel.unary_unary(
+                '/dfs.NameNode/Mkdir',
+                request_serializer=dfs__pb2.MkdirRequest.SerializeToString,
+                response_deserializer=dfs__pb2.MkdirResponse.FromString,
                 _registered_method=True)
-        self.RemoveDirectory = channel.unary_unary(
-                '/dfs.NameNode/RemoveDirectory',
-                request_serializer=dfs__pb2.RemoveDirectoryRequest.SerializeToString,
-                response_deserializer=dfs__pb2.DirectoryResponse.FromString,
+        self.Rmdir = channel.unary_unary(
+                '/dfs.NameNode/Rmdir',
+                request_serializer=dfs__pb2.RmdirRequest.SerializeToString,
+                response_deserializer=dfs__pb2.RmdirResponse.FromString,
                 _registered_method=True)
-        self.RemoveFile = channel.unary_unary(
-                '/dfs.NameNode/RemoveFile',
-                request_serializer=dfs__pb2.RemoveFileRequest.SerializeToString,
-                response_deserializer=dfs__pb2.FileResponse.FromString,
+        self.Rm = channel.unary_unary(
+                '/dfs.NameNode/Rm',
+                request_serializer=dfs__pb2.RmRequest.SerializeToString,
+                response_deserializer=dfs__pb2.RmResponse.FromString,
                 _registered_method=True)
 
 
@@ -76,43 +76,43 @@ class NameNodeServicer(object):
     """Servicios para el NameNode
     """
 
-    def Put(self, request, context):
+    def UploadFile(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Get(self, request, context):
+    def DownloadFile(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def ListFiles(self, request, context):
+    def Ls(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def ChangeDirectory(self, request, context):
+    def Cd(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def MakeDirectory(self, request, context):
+    def Mkdir(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def RemoveDirectory(self, request, context):
+    def Rmdir(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def RemoveFile(self, request, context):
+    def Rm(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -121,40 +121,40 @@ class NameNodeServicer(object):
 
 def add_NameNodeServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Put': grpc.unary_unary_rpc_method_handler(
-                    servicer.Put,
-                    request_deserializer=dfs__pb2.PutRequest.FromString,
-                    response_serializer=dfs__pb2.PutResponse.SerializeToString,
+            'UploadFile': grpc.unary_unary_rpc_method_handler(
+                    servicer.UploadFile,
+                    request_deserializer=dfs__pb2.UploadFileRequest.FromString,
+                    response_serializer=dfs__pb2.UploadFileResponse.SerializeToString,
             ),
-            'Get': grpc.unary_unary_rpc_method_handler(
-                    servicer.Get,
-                    request_deserializer=dfs__pb2.GetRequest.FromString,
-                    response_serializer=dfs__pb2.GetResponse.SerializeToString,
+            'DownloadFile': grpc.unary_unary_rpc_method_handler(
+                    servicer.DownloadFile,
+                    request_deserializer=dfs__pb2.DownloadFileRequest.FromString,
+                    response_serializer=dfs__pb2.DownloadFileResponse.SerializeToString,
             ),
-            'ListFiles': grpc.unary_unary_rpc_method_handler(
-                    servicer.ListFiles,
+            'Ls': grpc.unary_unary_rpc_method_handler(
+                    servicer.Ls,
                     request_deserializer=dfs__pb2.Empty.FromString,
-                    response_serializer=dfs__pb2.ListFilesResponse.SerializeToString,
+                    response_serializer=dfs__pb2.LsResponse.SerializeToString,
             ),
-            'ChangeDirectory': grpc.unary_unary_rpc_method_handler(
-                    servicer.ChangeDirectory,
-                    request_deserializer=dfs__pb2.ChangeDirectoryRequest.FromString,
-                    response_serializer=dfs__pb2.DirectoryResponse.SerializeToString,
+            'Cd': grpc.unary_unary_rpc_method_handler(
+                    servicer.Cd,
+                    request_deserializer=dfs__pb2.CdRequest.FromString,
+                    response_serializer=dfs__pb2.CdResponse.SerializeToString,
             ),
-            'MakeDirectory': grpc.unary_unary_rpc_method_handler(
-                    servicer.MakeDirectory,
-                    request_deserializer=dfs__pb2.MakeDirectoryRequest.FromString,
-                    response_serializer=dfs__pb2.DirectoryResponse.SerializeToString,
+            'Mkdir': grpc.unary_unary_rpc_method_handler(
+                    servicer.Mkdir,
+                    request_deserializer=dfs__pb2.MkdirRequest.FromString,
+                    response_serializer=dfs__pb2.MkdirResponse.SerializeToString,
             ),
-            'RemoveDirectory': grpc.unary_unary_rpc_method_handler(
-                    servicer.RemoveDirectory,
-                    request_deserializer=dfs__pb2.RemoveDirectoryRequest.FromString,
-                    response_serializer=dfs__pb2.DirectoryResponse.SerializeToString,
+            'Rmdir': grpc.unary_unary_rpc_method_handler(
+                    servicer.Rmdir,
+                    request_deserializer=dfs__pb2.RmdirRequest.FromString,
+                    response_serializer=dfs__pb2.RmdirResponse.SerializeToString,
             ),
-            'RemoveFile': grpc.unary_unary_rpc_method_handler(
-                    servicer.RemoveFile,
-                    request_deserializer=dfs__pb2.RemoveFileRequest.FromString,
-                    response_serializer=dfs__pb2.FileResponse.SerializeToString,
+            'Rm': grpc.unary_unary_rpc_method_handler(
+                    servicer.Rm,
+                    request_deserializer=dfs__pb2.RmRequest.FromString,
+                    response_serializer=dfs__pb2.RmResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -169,7 +169,7 @@ class NameNode(object):
     """
 
     @staticmethod
-    def Put(request,
+    def UploadFile(request,
             target,
             options=(),
             channel_credentials=None,
@@ -182,9 +182,9 @@ class NameNode(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/dfs.NameNode/Put',
-            dfs__pb2.PutRequest.SerializeToString,
-            dfs__pb2.PutResponse.FromString,
+            '/dfs.NameNode/UploadFile',
+            dfs__pb2.UploadFileRequest.SerializeToString,
+            dfs__pb2.UploadFileResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -196,7 +196,7 @@ class NameNode(object):
             _registered_method=True)
 
     @staticmethod
-    def Get(request,
+    def DownloadFile(request,
             target,
             options=(),
             channel_credentials=None,
@@ -209,9 +209,9 @@ class NameNode(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/dfs.NameNode/Get',
-            dfs__pb2.GetRequest.SerializeToString,
-            dfs__pb2.GetResponse.FromString,
+            '/dfs.NameNode/DownloadFile',
+            dfs__pb2.DownloadFileRequest.SerializeToString,
+            dfs__pb2.DownloadFileResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -223,7 +223,7 @@ class NameNode(object):
             _registered_method=True)
 
     @staticmethod
-    def ListFiles(request,
+    def Ls(request,
             target,
             options=(),
             channel_credentials=None,
@@ -236,9 +236,9 @@ class NameNode(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/dfs.NameNode/ListFiles',
+            '/dfs.NameNode/Ls',
             dfs__pb2.Empty.SerializeToString,
-            dfs__pb2.ListFilesResponse.FromString,
+            dfs__pb2.LsResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -250,7 +250,7 @@ class NameNode(object):
             _registered_method=True)
 
     @staticmethod
-    def ChangeDirectory(request,
+    def Cd(request,
             target,
             options=(),
             channel_credentials=None,
@@ -263,9 +263,9 @@ class NameNode(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/dfs.NameNode/ChangeDirectory',
-            dfs__pb2.ChangeDirectoryRequest.SerializeToString,
-            dfs__pb2.DirectoryResponse.FromString,
+            '/dfs.NameNode/Cd',
+            dfs__pb2.CdRequest.SerializeToString,
+            dfs__pb2.CdResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -277,7 +277,7 @@ class NameNode(object):
             _registered_method=True)
 
     @staticmethod
-    def MakeDirectory(request,
+    def Mkdir(request,
             target,
             options=(),
             channel_credentials=None,
@@ -290,9 +290,9 @@ class NameNode(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/dfs.NameNode/MakeDirectory',
-            dfs__pb2.MakeDirectoryRequest.SerializeToString,
-            dfs__pb2.DirectoryResponse.FromString,
+            '/dfs.NameNode/Mkdir',
+            dfs__pb2.MkdirRequest.SerializeToString,
+            dfs__pb2.MkdirResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -304,7 +304,7 @@ class NameNode(object):
             _registered_method=True)
 
     @staticmethod
-    def RemoveDirectory(request,
+    def Rmdir(request,
             target,
             options=(),
             channel_credentials=None,
@@ -317,9 +317,9 @@ class NameNode(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/dfs.NameNode/RemoveDirectory',
-            dfs__pb2.RemoveDirectoryRequest.SerializeToString,
-            dfs__pb2.DirectoryResponse.FromString,
+            '/dfs.NameNode/Rmdir',
+            dfs__pb2.RmdirRequest.SerializeToString,
+            dfs__pb2.RmdirResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -331,7 +331,7 @@ class NameNode(object):
             _registered_method=True)
 
     @staticmethod
-    def RemoveFile(request,
+    def Rm(request,
             target,
             options=(),
             channel_credentials=None,
@@ -344,9 +344,9 @@ class NameNode(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/dfs.NameNode/RemoveFile',
-            dfs__pb2.RemoveFileRequest.SerializeToString,
-            dfs__pb2.FileResponse.FromString,
+            '/dfs.NameNode/Rm',
+            dfs__pb2.RmRequest.SerializeToString,
+            dfs__pb2.RmResponse.FromString,
             options,
             channel_credentials,
             insecure,

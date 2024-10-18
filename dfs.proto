@@ -4,13 +4,13 @@ package dfs;
 
 // Servicios para el NameNode
 service NameNode {
-  rpc Put(PutRequest) returns (PutResponse);
-  rpc Get(GetRequest) returns (GetResponse);
-  rpc ListFiles(Empty) returns (ListFilesResponse);
-  rpc ChangeDirectory(ChangeDirectoryRequest) returns (DirectoryResponse);
-  rpc MakeDirectory(MakeDirectoryRequest) returns (DirectoryResponse);
-  rpc RemoveDirectory(RemoveDirectoryRequest) returns (DirectoryResponse);
-  rpc RemoveFile(RemoveFileRequest) returns (FileResponse);
+  rpc UploadFile(UploadFileRequest) returns (UploadFileResponse);
+  rpc DownloadFile(DownloadFileRequest) returns (DownloadFileResponse);
+  rpc Ls(Empty) returns (LsResponse);
+  rpc Cd(CdRequest) returns (CdResponse);
+  rpc Mkdir(MkdirRequest) returns (MkdirResponse);
+  rpc Rmdir(RmdirRequest) returns (RmdirResponse);
+  rpc Rm(RmRequest) returns (RmResponse);
 }
 
 // Servicios para el DataNode
@@ -22,48 +22,56 @@ service DataNode {
 // Mensajes utilizados
 message Empty {}
 
-message PutRequest {
+message UploadFileRequest {
   string filename = 1;
   bytes content = 2;
 }
 
-message PutResponse {
+message UploadFileResponse {
   string message = 1;
 }
 
-message GetRequest {
+message DownloadFileRequest {
   string filename = 1;
 }
 
-message GetResponse {
+message DownloadFileResponse {
   bytes content = 1;
 }
 
-message ListFilesResponse {
+message LsResponse {
   repeated string files = 1;
 }
 
-message ChangeDirectoryRequest {
+message CdRequest {
   string directory = 1;
 }
 
-message DirectoryResponse {
+message CdResponse {
   string message = 1;
 }
 
-message MakeDirectoryRequest {
+message MkdirRequest {
   string directory = 1;
 }
 
-message RemoveDirectoryRequest {
+message MkdirResponse {
+  string message = 1;
+}
+
+message RmdirRequest {
   string directory = 1;
 }
 
-message RemoveFileRequest {
+message RmdirResponse {
+  string message = 1;
+}
+
+message RmRequest {
   string filename = 1;
 }
 
-message FileResponse {
+message RmResponse {
   string message = 1;
 }
 

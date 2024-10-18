@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package dfs;
+
+// Servicios para el NameNode
+service NameNode {
+  rpc Put(PutRequest) returns (PutResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc ListFiles(Empty) returns (ListFilesResponse);
+  rpc ChangeDirectory(ChangeDirectoryRequest) returns (DirectoryResponse);
+  rpc MakeDirectory(MakeDirectoryRequest) returns (DirectoryResponse);
+  rpc RemoveDirectory(RemoveDirectoryRequest) returns (DirectoryResponse);
+  rpc RemoveFile(RemoveFileRequest) returns (FileResponse);
+}
+
+// Servicios para el DataNode
+service DataNode {
+  rpc StoreBlock(StoreBlockRequest) returns (StoreBlockResponse);
+  rpc GetBlock(GetBlockRequest) returns (GetBlockResponse);
+}
+
+// Mensajes utilizados
+message Empty {}
+
+message PutRequest {
+  string filename = 1;
+  bytes content = 2;
+}
+
+message PutResponse {
+  string message = 1;
+}
+
+message GetRequest {
+  string filename = 1;
+}
+
+message GetResponse {
+  bytes content = 1;
+}
+
+message ListFilesResponse {
+  repeated string files = 1;
+}
+
+message ChangeDirectoryRequest {
+  string directory = 1;
+}
+
+message DirectoryResponse {
+  string message = 1;
+}
+
+message MakeDirectoryRequest {
+  string directory = 1;
+}
+
+message RemoveDirectoryRequest {
+  string directory = 1;
+}
+
+message RemoveFileRequest {
+  string filename = 1;
+}
+
+message FileResponse {
+  string message = 1;
+}
+
+message StoreBlockRequest {
+  string block_id = 1;
+  bytes data = 2;
+}
+
+message StoreBlockResponse {
+  string message = 1;
+}
+
+message GetBlockRequest {
+  string block_id = 1;
+}
+
+message GetBlockResponse {
+  bytes data = 1;
+}
